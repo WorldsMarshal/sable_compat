@@ -30,7 +30,8 @@
   в проходе портала с камерой прохода, внутри рамки. Если это слишком дорого,
   допустимо не показывать их сквозь портал, но рядом с игроком они пропадать не должны.
 - Шейдеры (Iris) поддерживаются.
-- Другие измерения: пока без вида внутрь (только телепорт). Мультимировой рендер IP — позже.
+- Дальние порталы (выход за прорисовкой) — сразу: своя синхронизация чанков и сущностей у выхода.
+- Другие измерения: пока без вида внутрь (только телепорт). Мультимировой рендер IP — после того, как всё заработает в одном измерении.
 - Анимация открытия/закрытия плавная. Звуков пока нет.
 
 ## Совместимость (перепроверено в Claude Code по присланным jar)
@@ -53,7 +54,7 @@
 - `Entity.move` → `collide`: `@Redirect` у IP и у Sable. Делаем `@Inject` в `Entity.collide`, как в `EntityFastCollideMixin`.
 - `ChunkMap$TrackedEntity.updatePlayer`: IP делает `@Overwrite` пустым, а Sable там же `@Redirect` на `Entity.position()` с require=1 → краш при загрузке. Синхронизацию сущностей пишем своей, без overwrite.
 - `PlayerList.broadcast`: `@Overwrite` и у IP, и у Sable — работает только один. Не переносим (нужно только для мультимира).
-- `ChunkMap.getPlayers` (overwrite IP, inject Sable), `PlayerChunkSender.onChunkBatchReceivedByClient` (overwrite IP, inject C2ME notickvd) — часть чанковой синхронизации IP; не переносим, пока нет дальних порталов и других измерений.
+- `ChunkMap.getPlayers` (overwrite IP, inject Sable), `PlayerChunkSender.onChunkBatchReceivedByClient` (overwrite IP, inject C2ME notickvd) — чанковая синхронизация IP. Нужна для дальних порталов: пишем свою, без overwrite.
 - `Player.canPlayerFitWithinBlocksAndEntitiesWhen`: overwrite IP; WrapOperation Sable на `noCollision` в нём сохраняется (overwrite вызывает `noCollision`). Лучше заменить на inject.
 
 Мягкие (работают вместе): `Entity.getInBlockState` (overwrite Sable + inject IP), `Frustum.offsetToFullyIncludeCameraCube` (overwrite IP + inject Vista), `LevelRenderer.setupRender/isSectionCompiled/renderSectionLayer` (overwrite Sodium, redirect IP с require=0), `GameRenderer.renderLevel` (WrapOperation IP + Redirect Iris на rotation).
@@ -62,3 +63,6 @@
 
 ## Открытые вопросы
 - Название способности.
+
+## Порядок работы
+Сборка у Hsin локально. Изменённый src отдаётся архивом в чат; ветка/PR в git — только как резервная копия.
