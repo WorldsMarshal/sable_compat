@@ -71,3 +71,16 @@
 
 ## Порядок работы
 Сборка у Hsin локально. Изменённый src отдаётся архивом в чат; ветка/PR в git — только как резервная копия.
+
+## Ход работы
+### Сборка 1 — ядро IP и совместимость (без способности)
+- Источник IP: оригинальные исходники NeoForge-порта, тег v6.0.7 (github.com/iPortalTeam/ImmersivePortalsModForNeo), не декомпиляция.
+- Перенесено в `com.invfix.ip.{core,misc,neo,neomisc}`; peripheral (адские/эндовые порталы, палочка, стопка измерений) не перенесён.
+- Без своего modid: запуск из `InvincibleFix`, `@Mod` убраны (чужие моды не видят «IP установлен»).
+- Cloth Config убран: конфиг `config/sable_compat_portals.json` (Gson); YAML трансформаций шейдеров → JSON.
+  По умолчанию: ванильные адские/эндовые порталы, без зеркал и датапак-генерации, без сетевых запросов, maxPortalLayer = 10.
+- Конфликты: collide → @Inject в Entity.collide (без «обнуления >60 блоков/тик»); TrackedEntity — без @Overwrite, сущности на участках кораблей Sable идут ванильным путём; PlayerList.broadcast — @Inject TAIL.
+- Sodium 0.8.12: OcclusionCuller (RenderSectionVisitor + обход betterfpsdist), Viewport (testSection), RenderSectionManager (SectionCollector в контексте).
+- Flywheel 1.0.6: gl_ClipDistance в common.vert + уравнение в GlProgram#bind; старая совместимость под 0.6 удалена.
+- Проход портала: EntityCulling отключается, Fx/маска Thermal Sense не рисуются, Vista — порталы не рисуются внутри её трансляции.
+- build.gradle: compileOnly внутренний jar Sodium и iris.
