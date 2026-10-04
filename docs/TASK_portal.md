@@ -61,6 +61,10 @@
 
 Наш мод: пересечение только `FxLevelRendererMixin` (inject HEAD `LevelRenderer.renderLevel`) — нужна защита от повторной отрисовки VFX в проходе портала.
 
+Вторая партия (lithium 0.15.4, servercore, modernfix, smoothchunk, fuck-sable, sablecollisiondamage, aero_cam_sync, aeroportals, photon, better-clouds, sky_aesthetics, Stellar View, sodiumdynamiclights, horizon-fix): жёстких конфликтов с IP нет. Aeroportals и Stellar View миксинов не имеют.
+- ServerCore activation range (`ActivationRange.activateEntities`) будит сущности только вокруг игроков → у дальнего выхода мобы будут «спать», если функция включена в конфиге. Нужен свой хук: активировать сущности и вокруг выходов порталов.
+- Не проверены: betterfpsdist, journeymap.
+
 ## Открытые вопросы
 - Название способности.
 
