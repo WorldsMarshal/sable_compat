@@ -130,3 +130,10 @@ ChunkRenderList#prepareForRender своего списка → кадры рис
 Исправление (MixinSodiumRenderRegion): в проходе портала — отдельные пакеты региона, сброс при каждом новом
 проходе (PortalPassCompat#currentPassId), очистка вместе с clearAllCachedBatches/clearCachedBatchFor,
 освобождение нативной памяти в delete.
+
+### Сборка 3.3 — физика перехода
+- Изнанка твёрдая только для сущностей с глазом позади плоскости (EntityPortalBackMixin → Entity#canCollideWith;
+  его же спрашивают ваниль и Lithium). Раньше плита изнанки останавливала входящего спереди, пока IP не включит
+  исключение коллизии → «удар о невидимое», потеря скорости, откат сервером (has awaiting teleport).
+- Сущности (не игроки) после перехода: IP поворачивает только скорость (teleportRegularEntity) — угол доворачиваем
+  (снаряды — по новой скорости, прочие — поворотом портала), клиентам MysticPortalRotationPacket (угол + скорость).
