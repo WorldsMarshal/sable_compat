@@ -33,7 +33,7 @@
 - Другие измерения: пока без вида внутрь (только телепорт). Мультимировой рендер IP — позже.
 - Анимация открытия/закрытия плавная. Звуков пока нет.
 
-## Совместимость (проверено в прошлом чате по jar/декомпайлам)
+## Совместимость (перепроверено в Claude Code по присланным jar)
 | Мод | Что нужно |
 |---|---|
 | Sodium 0.8.12 | 3 миксина IP переписать: `OcclusionCuller.findVisible` (RenderSectionVisitor), `Viewport.isBoxVisible` (int,int,int → testSection), `RenderSectionManager` (sectionCollector, дерево секций). Остальные 6 совпадают. |
@@ -46,6 +46,19 @@
 | C2ME 0.4.0 (notickvd) | Проверить отправку чанков для дальних порталов. |
 | Chunky | Конфликтов нет. |
 
+## Конфликты миксинов IP с модами (сверено автоматически по всем миксинам)
+Владелец способности — Metroman. IP: 6.0.7, исходники (Apache-2.0), в сборку не ставится; переносим только нужную часть.
+
+Жёсткие (при переносе писать иначе):
+- `Entity.move` → `collide`: `@Redirect` у IP и у Sable. Делаем `@Inject` в `Entity.collide`, как в `EntityFastCollideMixin`.
+- `ChunkMap$TrackedEntity.updatePlayer`: IP делает `@Overwrite` пустым, а Sable там же `@Redirect` на `Entity.position()` с require=1 → краш при загрузке. Синхронизацию сущностей пишем своей, без overwrite.
+- `PlayerList.broadcast`: `@Overwrite` и у IP, и у Sable — работает только один. Не переносим (нужно только для мультимира).
+- `ChunkMap.getPlayers` (overwrite IP, inject Sable), `PlayerChunkSender.onChunkBatchReceivedByClient` (overwrite IP, inject C2ME notickvd) — часть чанковой синхронизации IP; не переносим, пока нет дальних порталов и других измерений.
+- `Player.canPlayerFitWithinBlocksAndEntitiesWhen`: overwrite IP; WrapOperation Sable на `noCollision` в нём сохраняется (overwrite вызывает `noCollision`). Лучше заменить на inject.
+
+Мягкие (работают вместе): `Entity.getInBlockState` (overwrite Sable + inject IP), `Frustum.offsetToFullyIncludeCameraCube` (overwrite IP + inject Vista), `LevelRenderer.setupRender/isSectionCompiled/renderSectionLayer` (overwrite Sodium, redirect IP с require=0), `GameRenderer.renderLevel` (WrapOperation IP + Redirect Iris на rotation).
+
+Наш мод: пересечение только `FxLevelRendererMixin` (inject HEAD `LevelRenderer.renderLevel`) — нужна защита от повторной отрисовки VFX в проходе портала.
+
 ## Открытые вопросы
-- Чья это способность (раса/персонаж), её название.
-- Как подключается Immersive Portals: зависимость (jar в сборке) или перенос нужной части кода в наш мод.
+- Название способности.
