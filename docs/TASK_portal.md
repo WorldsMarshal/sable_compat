@@ -63,7 +63,8 @@
 
 Вторая партия (lithium 0.15.4, servercore, modernfix, smoothchunk, fuck-sable, sablecollisiondamage, aero_cam_sync, aeroportals, photon, better-clouds, sky_aesthetics, Stellar View, sodiumdynamiclights, horizon-fix): жёстких конфликтов с IP нет. Aeroportals и Stellar View миксинов не имеют.
 - ServerCore activation range (`ActivationRange.activateEntities`) будит сущности только вокруг игроков → у дальнего выхода мобы будут «спать», если функция включена в конфиге. Нужен свой хук: активировать сущности и вокруг выходов порталов.
-- Не проверены: betterfpsdist, journeymap.
+- betterfpsdist 6.1: жёстких конфликтов нет, но его хук в Sodium `OcclusionCuller.isWithinRenderDistance` режет секции по расстоянию от **игрока** (`Minecraft.player`), а не от камеры прохода → у дальнего выхода вид в портале обрежется. Нужен обход на время прохода портала. Сущности он режет по расстоянию до камеры — это не мешает.
+- journeymap: пересечений с IP нет.
 
 ## Открытые вопросы
 - Название способности.
