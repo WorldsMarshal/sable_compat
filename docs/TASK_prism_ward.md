@@ -34,7 +34,9 @@
 | Energy Blast | отскок / зеркало в `EnergyBlastHandler.fly`; урон взрыва — от точки взрыва |
 | Point Blank | `PbHitScanWardMixin` (урон щиту — только выстрел, не наведение ракет); ракеты — `PbRetarget` |
 | Шрапнель RPL | `BurstSubProjectileMixin` |
-| VFX | `PrismWardFx` (один эффект на все щиты), `prism_ward.fsh`, `prism_shatter.fsh` |
+| VFX | `PrismWardFx` (один эффект на все щиты), `prism_ward.fsh`, `prism_shatter.fsh`; узор трещин — `prism_glass.glsl` (радиальные трещины от точки удара + неполные кольцевые, угловатые осколки, у каждого своё преломление, радужная кайма на изломах) |
+| Рамки (только владелец, вкл/выкл в меню) | `PrismWardFrames` (владелец — в данных сущности) |
+| Кратеры и разрезы не проходят за щит | `WardOcclusion`: лучи BMNW (Energy Blast), `ComboImpact`, `KineticCrater`/`KineticNuke`, Dismantle, Space Fold |
 
 ## Порталы и CBC
 `PortalPass`: снаряды CBC/MW трассируют весь отрезок тика сами (`clipAndDamage`) и били
@@ -46,5 +48,4 @@
 - Урон снаряда по HP щита — по исходникам для ванильных снарядов и CBC; неизвестный
   снаряд — 1. Пуля Point Blank — без спада по дальности и хедшота.
 - Лучи Heat Vision снимают с щита только видимую реакцию, не HP.
-- Кратер Energy Blast (BMNW) щитом не ограничивается.
 - Ракета MW через портал: точка/скорость/угол поворачиваются, сборка блоков — нет.
