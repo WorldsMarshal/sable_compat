@@ -208,6 +208,13 @@ ChunkRenderList#prepareForRender своего списка → кадры рис
   отрисованные в проходе портала отмечаются видимыми (Cullable#setCulled(false), видимость на 1 с).
 - Кандидаты на касание с порталом — в 32 блоках от него (было 8): быстрые сущности замечаются заранее.
 
+### ВРЕМЕННО: затычка кэша Sable (удалить, когда Sable исправит)
+- Sable 2.0.3: VoxelNeighborhoodState.IS_SOLID_MEMOIZED / IS_FULL_BLOCK — общие Int2BooleanOpenHashMap без блокировок,
+  computeIfAbsent; порча таблицы → вылет «Index -1» в rehash (crash 2026-10-07, сервер, FireBlock → setBlock → Sable).
+- Затычка: com.invfix.sablefix.SableVoxelCacheFix + mixin.sablefix.* (require = 0, по объекту кэша, только при Sable) —
+  та же логика, кэш потокобезопасный, без повторного входа. Удалить: эти классы, строки "sablefix." в
+  sable_compat_portal.mixins.json и ветку ".mixin.sablefix." в PortalMixinPlugin.
+
 ## Осталось
 - Постройки Sable сквозь порталы (RigidBodyHandle.teleport).
 - Дальние порталы: цепочки (портал у дальнего выхода), ServerCore activation range, обход betterfpsdist.
