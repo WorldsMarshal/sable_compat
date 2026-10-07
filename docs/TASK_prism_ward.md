@@ -34,7 +34,8 @@
 | Energy Blast | отскок / зеркало в `EnergyBlastHandler.fly`; урон взрыва — от точки взрыва |
 | Point Blank | `PbHitScanWardMixin` (урон щиту — только выстрел, не наведение ракет); ракеты — `PbRetarget` |
 | Шрапнель RPL | `BurstSubProjectileMixin` |
-| VFX | `PrismWardFx` (один эффект на все щиты), `prism_ward.fsh`, `prism_shatter.fsh`; узор трещин — `prism_glass.glsl` (радиальные трещины от точки удара + неполные кольцевые, угловатые осколки, у каждого своё преломление, радужная кайма на изломах) |
+| VFX | `PrismWardFx` (один эффект на все щиты), `prism_ward.fsh`, `prism_shatter.fsh`; куски — `prism_glass.glsl` (сетка со смещёнными узлами, треугольники и четырёхугольники: угловато и хаотично, без центра; линий нет — только искривление вида и расслоение цветов на стыках; у края щита эффект гаснет плавно, чуть заходя за рамку) |
+| Удар рукой по щиту | клиент: `PrismWardClient.onAttack` → `PrismWardPackets.Punch`; сервер: проверка взгляда/досягаемости, `Player#attack` + бонус attackPower (`hurtEntity`) |
 | Рамки (только владелец, вкл/выкл в меню) | `PrismWardFrames` (владелец — в данных сущности) |
 | Кратеры и разрезы не проходят за щит | `WardOcclusion`: лучи BMNW (Energy Blast), `ComboImpact`, `KineticCrater`/`KineticNuke`, Dismantle, Space Fold |
 
