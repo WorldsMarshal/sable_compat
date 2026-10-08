@@ -232,3 +232,7 @@ ChunkRenderList#prepareForRender своего списка → кадры рис
   другие моды): LocalBodyEntityRenderMixin (LivingEntityRenderer#render) ставит LocalBodyRender для своего игрока
   при виде от первого лица — GeckoLib не обрабатывает анимации «от третьего лица» в том же кадре.
   Флаг сбрасывается в начале кадра (RenderFrameEvent.Pre).
+- Анимации оружия (перезарядка) с LovsPlayer: Point Blank ведёт ходьбу оружия от первого лица из RenderLivingEvent.Pre
+  своего игрока; когда своё тело рисуется «со стороны», машина ходьбы каждый кадр запускает отсутствующие у ствола
+  animation.model.standing/… и останавливает контроллер. PbWalkingOnLocalBodyMixin: при LocalBodyRender ходьба не трогается.
+  Диагностика: invfix/localbody пишет в лог стек (3 раза за сессию), кто рисует своё тело вне порталов.
