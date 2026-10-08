@@ -236,3 +236,8 @@ ChunkRenderList#prepareForRender своего списка → кадры рис
   своего игрока; когда своё тело рисуется «со стороны», машина ходьбы каждый кадр запускает отсутствующие у ствола
   animation.model.standing/… и останавливает контроллер. PbWalkingOnLocalBodyMixin: при LocalBodyRender ходьба не трогается.
   Диагностика: invfix/localbody пишет в лог стек (3 раза за сессию), кто рисует своё тело вне порталов.
+- Анимации оружия Point Blank с LovsPlayer (по диагностике invfix/pbdiag): сброс перезарядки забирает правильная
+  отрисовка (FIRST_PERSON_RIGHT_HAND), посторонних обработок анимаций нет. LovsPlayer кладёт свои сцены в
+  assets/aot_player_interactions/animations/*.json (без объекта "animations"); GeckoLib читает всю папку animations
+  как свои файлы. GeckoLibNamespaceExclusions (конструктор мода, клиент) исключает это пространство имён из загрузки
+  GeckoLib. Диагностика перезарядки пишет, есть ли файл анимаций ствола в кэше GeckoLib и находится ли анимация.
