@@ -228,16 +228,9 @@ ChunkRenderList#prepareForRender своего списка → кадры рис
   окна следующего портала не писалась, очистка глубины окна (экранный треугольник) стирала глубину всего экрана.
   Исправление: PbRenderTypeStencilMixin — состояние трафарета вокруг такого типа запоминается и восстанавливается;
   RendererUsingStencil#ensureStencilTest — тест включается заново перед каждым шагом портала, которому нужен трафарет.
-- Анимации оружия от первого лица при отрисовке своего тела как сущности (Player Animator у LovsPlayer, порталы,
-  другие моды): LocalBodyEntityRenderMixin (LivingEntityRenderer#render) ставит LocalBodyRender для своего игрока
-  при виде от первого лица — GeckoLib не обрабатывает анимации «от третьего лица» в том же кадре.
-  Флаг сбрасывается в начале кадра (RenderFrameEvent.Pre).
-- Анимации оружия (перезарядка) с LovsPlayer: Point Blank ведёт ходьбу оружия от первого лица из RenderLivingEvent.Pre
-  своего игрока; когда своё тело рисуется «со стороны», машина ходьбы каждый кадр запускает отсутствующие у ствола
-  animation.model.standing/… и останавливает контроллер. PbWalkingOnLocalBodyMixin: при LocalBodyRender ходьба не трогается.
-  Диагностика: invfix/localbody пишет в лог стек (3 раза за сессию), кто рисует своё тело вне порталов.
-- Анимации оружия Point Blank с LovsPlayer (по диагностике invfix/pbdiag): сброс перезарядки забирает правильная
-  отрисовка (FIRST_PERSON_RIGHT_HAND), посторонних обработок анимаций нет. LovsPlayer кладёт свои сцены в
-  assets/aot_player_interactions/animations/*.json (без объекта "animations"); GeckoLib читает всю папку animations
-  как свои файлы. GeckoLibNamespaceExclusions (конструктор мода, клиент) исключает это пространство имён из загрузки
-  GeckoLib. Диагностика перезарядки пишет, есть ли файл анимаций ствола в кэше GeckoLib и находится ли анимация.
+- Анимации оружия Point Blank с LovsPlayer (причина подтверждена: после фикса «Unable to find animation» в логе нет):
+  LovsPlayer кладёт свои сцены в assets/aot_player_interactions/animations/*.json (без объекта "animations");
+  GeckoLib читает всю папку animations любого мода как свои файлы и спотыкается на них — анимации стволов не
+  попадали в кэш. GeckoLibNamespaceExclusions (конструктор мода, клиент) исключает пространство имён
+  aot_player_interactions из загрузки GeckoLib. LovsPlayer свои файлы читает сам (getResourceAsStream, папка mods),
+  GeckoLib не использует — на нём это не сказывается.
