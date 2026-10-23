@@ -68,6 +68,8 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['net.caffeinemc.sodium-neoforge-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['iris-neoforge-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['createendertransmission-*.jar'])
+    // PlayerAnimator (KosmX, playeranimator 2.0.4+1.21.1) — анимация Serious Punch: player-animation-lib-forge-2.0.4+1.21.1.jar
+    compileOnly fileTree(dir: 'libs', include: ['player-animation-lib-*.jar'])
 }
 
 // Указываем NeoForge что у нас есть Mixin конфиг
