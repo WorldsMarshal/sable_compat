@@ -43,7 +43,6 @@ dependencies {
     compileOnly files('libs/jei-1.21.1-neoforge-19.27.0.340.jar')
     compileOnly files('libs/veil-neoforge-1.21.1-4.0.0.jar')
     compileOnly files('libs/ColdSweat-2.4.1.jar')
-    compileOnly files('libs/theboysmod-1.0.0.1.jar')
     compileOnly fileTree(dir: 'libs', include: ['Jade-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['pointblank-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['createcybernetics-*.jar'])
@@ -68,8 +67,10 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['net.caffeinemc.sodium-neoforge-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['iris-neoforge-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['createendertransmission-*.jar'])
-    // PlayerAnimator (KosmX, playeranimator 2.0.4+1.21.1) — анимация Serious Punch: player-animation-lib-forge-2.0.4+1.21.1.jar
+    // PlayerAnimator (KosmX, playeranimator 2.0.4+1.21.1) — анимации Serious Punch и способностей V: player-animation-lib-forge-2.0.4+1.21.1.jar
     compileOnly fileTree(dir: 'libs', include: ['player-animation-lib-*.jar'])
+    // GeckoLib 4 (geckolib-neoforge-1.21.1-4.x.jar) — модели и анимации способностей V (перенос из The Boys)
+    compileOnly fileTree(dir: 'libs', include: ['geckolib-neoforge-*.jar'])
 }
 
 // Указываем NeoForge что у нас есть Mixin конфиг
