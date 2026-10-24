@@ -62,6 +62,7 @@ dependencies {
     compileOnly fileTree(dir: 'libs', include: ['ritchiesprojectilelib-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['drivebywire-*.jar'])
     compileOnly fileTree(dir: 'libs', include: ['crowns-*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['sodiumdynamiclights-*.jar'])
     // Ядро Immersive Portals (com.invfix.ip) — совместимость с Sodium и Iris.
     // Sodium: нужен ВНУТРЕННИЙ jar из sodium-neoforge-...jar → META-INF/jarjar/net.caffeinemc.sodium-neoforge-...-mod.jar
     compileOnly fileTree(dir: 'libs', include: ['net.caffeinemc.sodium-neoforge-*.jar'])
